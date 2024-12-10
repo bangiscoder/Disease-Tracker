@@ -1,5 +1,5 @@
 // app.js
-const map = L.map('map').setView([20, 0], 2); // Set initial view to world map
+const map = L.map('map').setView([20, 0], 10); // Set initial view to world map
 
 // Load OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -7,13 +7,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Dummy data for diseases (latitude, longitude, and cases)
-const diseaseData = [];
+const diseaseData = [
+    {disease: 'Measles', location: 'Enugu', cases: 50, deaths: 2},
+    {disease: 'Cholera', location: 'Kano', cases: 100, deaths: 6},
+];
 
 // Function to add markers to the map
 function addMarker(location, cases) {
     L.marker(location)
         .addTo(map)
-        .bindPopup(`Cases: ${cases}`)
+        .bindPopup<b>(`Cases: ${cases}</b><br>
+        diseaseName: ${diseaseName}</b><br>
+        deaths: ${deaths}
+        `)
         .openPopup();
 }
 
@@ -34,6 +40,8 @@ document.getElementById('caseForm').addEventListener('submit', function(event) {
     const latitude = parseFloat(document.getElementById('latitude').value);
     const longitude = parseFloat(document.getElementById('longitude').value);
     const cases = parseInt(document.getElementById('cases').value);
+    const diseaseNameInput =(document.getElementByid('diseaseName').value.trim);
+    const deaths = parseInt(document.getElementByid('deaths').value);
 
     // Add new case to the array
     diseaseData.push({ location: [latitude, longitude], cases });
